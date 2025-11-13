@@ -1,9 +1,10 @@
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { createServer as createExpressServer } from "./server";
-import { createServer as createHttpServer } from "http";
-import { Server as SocketIOServer } from "socket.io";
+import express from "express";
+import cors from "cors";
+import { createSocketIO } from "./server";
+import { handleDemo } from "./server/routes/demo";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -14,7 +15,6 @@ export default defineConfig(({ mode }) => ({
       allow: ["./client", "./shared"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
-    middlewareMode: true,
   },
   build: {
     outDir: "dist/spa",
@@ -29,27 +29,33 @@ export default defineConfig(({ mode }) => ({
 }));
 
 function expressPlugin(): Plugin {
-  let io: SocketIOServer;
-
   return {
     name: "express-plugin",
     apply: "serve",
     configureServer(viteServer) {
-      const { app, io: socketIO } = createExpressServer();
-      io = socketIO;
+      // Create Express app for API routes
+      const app = express();
+      app.use(cors());
+      app.use(express.json());
+      app.use(express.urlencoded({ extended: true }));
 
-      // Bind Socket.IO to Vite's HTTP server
-      io.attach((viteServer.httpServer as any), {
-        cors: {
-          origin: "*",
-          methods: ["GET", "POST"],
-        },
+      // API routes
+      app.get("/api/ping", (_req, res) => {
+        const ping = process.env.PING_MESSAGE ?? "ping";
+        res.json({ message: ping });
       });
 
-      // Use Express app for regular HTTP requests
-      return () => {
-        viteServer.middlewares.use(app);
-      };
+      app.get("/api/demo", handleDemo);
+
+      // Create Socket.IO and attach to Vite's HTTP server
+      const io = createSocketIO();
+      io.attach((viteServer.httpServer as any));
+
+      // Add Express as middleware
+      viteServer.middlewares.use(app);
+
+      // Log Socket.IO setup
+      console.log("✨ Socket.IO attached to dev server");
     },
   };
 }
