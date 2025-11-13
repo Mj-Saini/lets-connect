@@ -214,16 +214,68 @@ export default function Chat() {
 
   const genderLabel = partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
 
+  // If no partner yet, show connect screen
+  if (!partner) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center p-4">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
+          <div className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse" style={{ animationDelay: "2s" }}></div>
+        </div>
+
+        <div className="relative w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 mb-4 shadow-lg">
+              <Users className="w-7 h-7 text-white" />
+            </div>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Ready to chat?</h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm">Click below to find your chat partner</p>
+          </div>
+
+          <form onSubmit={(e) => { e.preventDefault(); handleConnect(); }} className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8 space-y-6">
+            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 text-center">
+              <p className="text-slate-700 dark:text-slate-300 font-medium">
+                Connected as <span className="font-bold text-indigo-600 dark:text-indigo-400">{username}</span>
+              </p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm capitalize mt-1">
+                Gender: {gender}
+              </p>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isConnectDebouncing || !connected || isSearching}
+              className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-200"
+            >
+              {isSearching ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Searching for match...
+                </span>
+              ) : (
+                <span className="flex items-center justify-center gap-2">
+                  <MessageSquare className="w-5 h-5" />
+                  Search for Match
+                </span>
+              )}
+            </Button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 overflow-hidden">
       {/* Top Bar - Partner Info */}
       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 py-4 flex items-center justify-between flex-shrink-0 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white font-semibold text-sm">
-            {partner.username.charAt(0).toUpperCase()}
+            {partner?.username.charAt(0).toUpperCase()}
           </div>
           <div>
-            <p className="font-semibold text-slate-900 dark:text-white text-sm">{partner.username}</p>
+            <p className="font-semibold text-slate-900 dark:text-white text-sm">{partner?.username}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400 capitalize">{genderLabel}</p>
           </div>
         </div>
