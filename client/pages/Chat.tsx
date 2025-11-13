@@ -241,22 +241,24 @@ export default function Chat() {
       {!isSearching && (
         <div className="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 px-3 py-3 flex-shrink-0 shadow-lg">
           <div className="flex gap-2 items-center">
-            {/* New Chat Button */}
+            {/* New Chat / Naya Chat Button */}
             <button
               onClick={handleNewChat}
               disabled={isNewChatDebouncing || !connected}
-              aria-label="Find new chat partner"
+              aria-label="Find new chat partner - New Chat / Naya Chat (800ms cooldown)"
               aria-disabled={isNewChatDebouncing || !connected}
               title="Find new chat partner (800ms cooldown)"
               className={cn(
-                "flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center font-semibold text-sm transition-all duration-200",
+                "flex-shrink-0 px-3 h-12 rounded-xl flex items-center justify-center gap-2 font-semibold text-sm transition-all duration-200 whitespace-nowrap",
                 "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-800",
                 isNewChatDebouncing || !connected
                   ? "bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed"
                   : "bg-orange-500 hover:bg-orange-600 text-white shadow-md hover:shadow-lg active:scale-95"
               )}
             >
-              <RotateCcw className="w-5 h-5" />
+              <RotateCcw className="w-4 h-4" />
+              <span className="hidden sm:inline">New Chat</span>
+              <span className="sm:hidden text-xs">New</span>
             </button>
 
             {/* Message Input */}
