@@ -98,15 +98,22 @@ function createChatRoom(io: SocketIOServer, userId1: string, userId2: string, us
   io.to(roomId).emit("searching", { status: "matched" });
 }
 
-export function createServer() {
-  const app = express();
-  const httpServer = createHttpServer(app);
-  const io = new SocketIOServer(httpServer, {
+export function createSocketIO() {
+  // Returns a Socket.IO server that can be attached to an existing HTTP server
+  const io = new SocketIOServer({
     cors: {
       origin: "*",
       methods: ["GET", "POST"],
     },
   });
+  return io;
+}
+
+export function createServer() {
+  const app = express();
+  const httpServer = createHttpServer(app);
+  const io = createSocketIO();
+  io.attach(httpServer);
 
   // Middleware
   app.use(cors());
