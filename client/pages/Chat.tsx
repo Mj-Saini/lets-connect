@@ -163,11 +163,56 @@ export default function Chat() {
 
   const DEBOUNCE_DELAY = 800;
 
-  if (!roomId || !partner || !username || !gender) {
-    return null; // Will redirect via useEffect
-  }
+  const handleConnect = () => {
+    if (isConnectDebouncing || !socket || !connected) return;
 
-  const genderLabel = partner.gender.charAt(0).toUpperCase() + partner.gender.slice(1);
+    setIsConnectDebouncing(true);
+
+    // Clear debounce timeout if exists
+    if (connectDebounceRef.current) {
+      clearTimeout(connectDebounceRef.current);
+    }
+
+    // Update UI
+    setLocalIsSearching(true);
+    setMessages([]);
+    setMessageInput("");
+
+    // Listen for matched event
+    const handleMatched = (data: { room_id: string; partner: { username: string; gender: string } }) => {
+      console.log("Matched!", data);
+      setRoomId(data.room_id);
+      setPartner(data.partner as { username: string; gender: "male" | "female" | "other" });
+      setLocalIsSearching(false);
+    };
+
+    const handleQueueAck = (data: { success: boolean; message?: string }) => {
+      if (!data.success) {
+        toast({
+          title: "Error",
+          description: data.message || "Failed to join queue",
+          variant: "destructive",
+        });
+        setLocalIsSearching(false);
+      }
+    };
+
+    socket.once("queue_ack", handleQueueAck);
+    socket.once("matched", handleMatched);
+
+    // Emit join_queue event
+    socket.emit("join_queue", {
+      username: username,
+      gender: gender,
+    });
+
+    // Set debounce
+    connectDebounceRef.current = setTimeout(() => {
+      setIsConnectDebouncing(false);
+    }, DEBOUNCE_DELAY);
+  };
+
+  const genderLabel = partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 overflow-hidden">
