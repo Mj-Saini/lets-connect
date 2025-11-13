@@ -27,15 +27,17 @@ export default function Chat() {
   const [isSearching, setLocalIsSearching] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [isNewChatDebouncing, setIsNewChatDebouncing] = useState(false);
+  const [isConnectDebouncing, setIsConnectDebouncing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const newChatDebounceRef = useRef<NodeJS.Timeout>();
+  const connectDebounceRef = useRef<NodeJS.Timeout>();
 
-  // Redirect if not matched
+  // Redirect if not logged in
   useEffect(() => {
-    if (!roomId || !partner || !username || !gender) {
+    if (!username || !gender) {
       navigate("/");
     }
-  }, [roomId, partner, username, gender, navigate]);
+  }, [username, gender, navigate]);
 
   // Setup socket listeners
   useEffect(() => {
