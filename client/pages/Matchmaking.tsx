@@ -37,37 +37,18 @@ export default function Matchmaking() {
 
     setIsLoading(true);
 
-    // Update context
+    // Update context with username and gender
     setUsername(localUsername);
     setGender(localGender);
-    setIsSearching(true);
+    setIsSearching(false);
     setRoomId(null);
     setPartner(null);
 
-    // Listen for matched event
-    const handleMatched = (data: { room_id: string; partner: { username: string; gender: string } }) => {
-      console.log("Matched!", data);
-      setRoomId(data.room_id);
-      setPartner(data.partner as { username: string; gender: "male" | "female" | "other" });
+    // Navigate directly to chat room without searching
+    setTimeout(() => {
       setIsLoading(false);
       navigate("/chat");
-    };
-
-    const handleQueueAck = (data: { success: boolean; message?: string }) => {
-      if (!data.success) {
-        setError(data.message || "Failed to join queue");
-        setIsLoading(false);
-      }
-    };
-
-    socket.once("queue_ack", handleQueueAck);
-    socket.once("matched", handleMatched);
-
-    // Emit join_queue event
-    socket.emit("join_queue", {
-      username: localUsername,
-      gender: localGender,
-    });
+    }, 300);
   };
 
   const genderOptions = [
