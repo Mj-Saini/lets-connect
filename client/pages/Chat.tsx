@@ -5,7 +5,7 @@ import { useChat } from "@/hooks/useChat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Loader, UserX, RotateCcw } from "lucide-react";
+import { Send, Loader, UserX, RotateCcw, Users, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Message {
