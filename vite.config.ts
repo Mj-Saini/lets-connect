@@ -49,7 +49,7 @@ function expressPlugin(): Plugin {
 
       // Create Socket.IO and attach to Vite's HTTP server
       const io = createSocketIO();
-      io.attach((viteServer.httpServer as any));
+      io.attach(viteServer.httpServer as any);
 
       // Add Express as middleware
       viteServer.middlewares.use(app);

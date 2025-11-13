@@ -5,7 +5,14 @@ import { useChat } from "@/hooks/useChat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Loader, UserX, RotateCcw, Users, MessageSquare } from "lucide-react";
+import {
+  Send,
+  Loader,
+  UserX,
+  RotateCcw,
+  Users,
+  MessageSquare,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -19,7 +26,17 @@ interface Message {
 export default function Chat() {
   const navigate = useNavigate();
   const { socket, connected } = useSocket();
-  const { username, gender, roomId, partner, setIsSearching, setRoomId, setPartner, setUsername, setGender } = useChat();
+  const {
+    username,
+    gender,
+    roomId,
+    partner,
+    setIsSearching,
+    setRoomId,
+    setPartner,
+    setUsername,
+    setGender,
+  } = useChat();
   const { toast } = useToast();
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -43,7 +60,12 @@ export default function Chat() {
   useEffect(() => {
     if (!socket) return;
 
-    const handleMessage = (data: { room_id: string; username: string; text: string; timestamp: number }) => {
+    const handleMessage = (data: {
+      room_id: string;
+      username: string;
+      text: string;
+      timestamp: number;
+    }) => {
       if (roomId && data.room_id !== roomId) return;
 
       const newMessage: Message = {
@@ -57,7 +79,10 @@ export default function Chat() {
       setMessages((prev) => [...prev, newMessage]);
     };
 
-    const handlePartnerLeft = (data: { room_id: string; partner_username: string }) => {
+    const handlePartnerLeft = (data: {
+      room_id: string;
+      partner_username: string;
+    }) => {
       if (roomId && data.room_id !== roomId) return;
 
       toast({
@@ -72,9 +97,17 @@ export default function Chat() {
       setLocalIsSearching(false);
     };
 
-    const handleMatched = (data: { room_id: string; partner: { username: string; gender: string } }) => {
+    const handleMatched = (data: {
+      room_id: string;
+      partner: { username: string; gender: string };
+    }) => {
       setRoomId(data.room_id);
-      setPartner(data.partner as { username: string; gender: "male" | "female" | "other" });
+      setPartner(
+        data.partner as {
+          username: string;
+          gender: "male" | "female" | "other";
+        },
+      );
       setMessages([]);
       setMessageInput("");
       setLocalIsSearching(false);
@@ -181,10 +214,18 @@ export default function Chat() {
     setMessageInput("");
 
     // Listen for matched event
-    const handleMatched = (data: { room_id: string; partner: { username: string; gender: string } }) => {
+    const handleMatched = (data: {
+      room_id: string;
+      partner: { username: string; gender: string };
+    }) => {
       console.log("Matched!", data);
       setRoomId(data.room_id);
-      setPartner(data.partner as { username: string; gender: "male" | "female" | "other" });
+      setPartner(
+        data.partner as {
+          username: string;
+          gender: "male" | "female" | "other";
+        },
+      );
       setLocalIsSearching(false);
     };
 
@@ -214,7 +255,8 @@ export default function Chat() {
     }, DEBOUNCE_DELAY);
   };
 
-  const genderLabel = partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
+  const genderLabel =
+    partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
 
   // If no partner yet, show connect screen
   if (!partner) {
@@ -223,7 +265,10 @@ export default function Chat() {
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
-          <div className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse" style={{ animationDelay: "2s" }}></div>
+          <div
+            className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"
+            style={{ animationDelay: "2s" }}
+          ></div>
         </div>
 
         <div className="relative w-full max-w-md">
@@ -231,14 +276,27 @@ export default function Chat() {
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 mb-4 shadow-lg">
               <Users className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Ready to chat?</h1>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">Click below to find your chat partner</p>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+              Ready to chat?
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm">
+              Click below to find your chat partner
+            </p>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); handleConnect(); }} className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8 space-y-6">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleConnect();
+            }}
+            className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8 space-y-6"
+          >
             <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 text-center">
               <p className="text-slate-700 dark:text-slate-300 font-medium">
-                Connected as <span className="font-bold text-indigo-600 dark:text-indigo-400">{username}</span>
+                Connected as{" "}
+                <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                  {username}
+                </span>
               </p>
               <p className="text-slate-600 dark:text-slate-400 text-sm capitalize mt-1">
                 Gender: {gender}
@@ -277,8 +335,12 @@ export default function Chat() {
             {partner?.username.charAt(0).toUpperCase()}
           </div>
           <div>
-            <p className="font-semibold text-slate-900 dark:text-white text-sm">{partner?.username}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 capitalize">{genderLabel}</p>
+            <p className="font-semibold text-slate-900 dark:text-white text-sm">
+              {partner?.username}
+            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 capitalize">
+              {genderLabel}
+            </p>
           </div>
         </div>
         {isSearching && (
@@ -294,7 +356,9 @@ export default function Chat() {
         {messages.length === 0 && !isSearching && (
           <div className="flex items-center justify-center h-full text-center">
             <div>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">Start a conversation!</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
+                Start a conversation!
+              </p>
             </div>
           </div>
         )}
@@ -305,7 +369,9 @@ export default function Chat() {
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30 mb-3">
                 <Loader className="w-6 h-6 text-indigo-600 dark:text-indigo-400 animate-spin" />
               </div>
-              <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Searching for new match...</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+                Searching for new match...
+              </p>
             </div>
           </div>
         )}
@@ -315,7 +381,7 @@ export default function Chat() {
             key={msg.id}
             className={cn(
               "flex gap-3",
-              msg.isOwn ? "flex-row-reverse" : "flex-row"
+              msg.isOwn ? "flex-row-reverse" : "flex-row",
             )}
           >
             {!msg.isOwn && (
@@ -328,7 +394,7 @@ export default function Chat() {
                 "max-w-xs rounded-2xl px-4 py-2.5 text-sm",
                 msg.isOwn
                   ? "bg-indigo-600 text-white rounded-br-none"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none",
               )}
             >
               {msg.text}
@@ -354,7 +420,7 @@ export default function Chat() {
                 "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-800",
                 isNewChatDebouncing || !connected
                   ? "bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed"
-                  : "bg-orange-500 hover:bg-orange-600 text-white shadow-md hover:shadow-lg active:scale-95"
+                  : "bg-orange-500 hover:bg-orange-600 text-white shadow-md hover:shadow-lg active:scale-95",
               )}
             >
               <RotateCcw className="w-4 h-4" />
@@ -397,8 +463,12 @@ export default function Chat() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-100 dark:bg-indigo-900/30 mb-4">
               <Loader className="w-8 h-8 text-indigo-600 dark:text-indigo-400 animate-spin" />
             </div>
-            <p className="text-slate-600 dark:text-slate-400 font-medium">Searching for new match...</p>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">You'll be connected shortly</p>
+            <p className="text-slate-600 dark:text-slate-400 font-medium">
+              Searching for new match...
+            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">
+              You'll be connected shortly
+            </p>
           </div>
         </div>
       )}

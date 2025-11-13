@@ -17,13 +17,18 @@ export interface ChatContextType {
   setIsSearching: (searching: boolean) => void;
 }
 
-export const ChatContext = createContext<ChatContextType | undefined>(undefined);
+export const ChatContext = createContext<ChatContextType | undefined>(
+  undefined,
+);
 
 export function ChatProvider({ children }: { children: ReactNode }) {
   const [username, setUsername] = useState("");
   const [gender, setGender] = useState<Gender | null>(null);
   const [roomId, setRoomId] = useState<string | null>(null);
-  const [partner, setPartner] = useState<{ username: string; gender: Gender } | null>(null);
+  const [partner, setPartner] = useState<{
+    username: string;
+    gender: Gender;
+  } | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
   return (

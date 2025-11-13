@@ -18,13 +18,23 @@ const NotFound = () => {
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse" style={{ animationDelay: "2s" }}></div>
+        <div
+          className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
       </div>
 
       <div className="relative text-center max-w-md mx-auto">
-        <h1 className="text-7xl font-bold text-slate-900 dark:text-white mb-4">404</h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400 mb-4 font-semibold">Oops! Page not found</p>
-        <p className="text-slate-600 dark:text-slate-400 mb-8">The page you're looking for doesn't exist. Let's get you back to chatting!</p>
+        <h1 className="text-7xl font-bold text-slate-900 dark:text-white mb-4">
+          404
+        </h1>
+        <p className="text-xl text-slate-600 dark:text-slate-400 mb-4 font-semibold">
+          Oops! Page not found
+        </p>
+        <p className="text-slate-600 dark:text-slate-400 mb-8">
+          The page you're looking for doesn't exist. Let's get you back to
+          chatting!
+        </p>
 
         <Link to="/">
           <Button className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700">

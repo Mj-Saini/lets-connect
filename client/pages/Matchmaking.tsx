@@ -10,7 +10,15 @@ import { cn } from "@/lib/utils";
 export default function Matchmaking() {
   const navigate = useNavigate();
   const { socket, connected } = useSocket();
-  const { username, setUsername, gender, setGender, setIsSearching, setRoomId, setPartner } = useChat();
+  const {
+    username,
+    setUsername,
+    gender,
+    setGender,
+    setIsSearching,
+    setRoomId,
+    setPartner,
+  } = useChat();
   const [localUsername, setLocalUsername] = useState(username);
   const [localGender, setLocalGender] = useState(gender);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +70,10 @@ export default function Matchmaking() {
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse" style={{ animationDelay: "2s" }}></div>
+        <div
+          className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
       </div>
 
       <div className="relative w-full max-w-md">
@@ -71,15 +82,25 @@ export default function Matchmaking() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 mb-4 shadow-lg">
             <Users className="w-7 h-7 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Chat Connect</h1>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">Find someone to talk to instantly</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            Chat Connect
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">
+            Find someone to talk to instantly
+          </p>
         </div>
 
         {/* Main card */}
-        <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8 space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8 space-y-6"
+        >
           {/* Username Input */}
           <div className="space-y-2">
-            <label htmlFor="username" className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+            <label
+              htmlFor="username"
+              className="block text-sm font-semibold text-slate-700 dark:text-slate-300"
+            >
               Your Name
             </label>
             <Input
@@ -115,7 +136,7 @@ export default function Matchmaking() {
                     "border-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-900",
                     localGender === option.value
                       ? "bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-200 dark:shadow-indigo-900"
-                      : "bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                      : "bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600",
                   )}
                 >
                   {option.label}

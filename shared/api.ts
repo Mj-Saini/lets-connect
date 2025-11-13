@@ -15,7 +15,7 @@ export interface DemoResponse {
  * Socket event types for 1-on-1 chat
  */
 
-export type Gender = 'male' | 'female' | 'other';
+export type Gender = "male" | "female" | "other";
 
 export interface QueueJoinPayload {
   username: string;

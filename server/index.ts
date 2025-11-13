@@ -4,7 +4,12 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { createServer as createHttpServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
-import { type QueueJoinPayload, type Gender, type SendMessagePayload, type LeaveRoomPayload } from "@shared/api";
+import {
+  type QueueJoinPayload,
+  type Gender,
+  type SendMessagePayload,
+  type LeaveRoomPayload,
+} from "@shared/api";
 
 interface QueuedUser {
   socketId: string;
@@ -35,8 +40,17 @@ function generateRoomId(): string {
   return `room_${++roomIdCounter}_${Date.now()}`;
 }
 
-function findMatch(userId: string, queuedUser: QueuedUser, io: SocketIOServer): boolean {
-  const oppositeGender = queuedUser.gender === 'male' ? 'female' : queuedUser.gender === 'female' ? 'male' : null;
+function findMatch(
+  userId: string,
+  queuedUser: QueuedUser,
+  io: SocketIOServer,
+): boolean {
+  const oppositeGender =
+    queuedUser.gender === "male"
+      ? "female"
+      : queuedUser.gender === "female"
+        ? "male"
+        : null;
 
   // Try to find opposite gender match
   if (oppositeGender) {
@@ -65,7 +79,13 @@ function findMatch(userId: string, queuedUser: QueuedUser, io: SocketIOServer): 
   return false;
 }
 
-function createChatRoom(io: SocketIOServer, userId1: string, userId2: string, user1: QueuedUser, user2: QueuedUser): void {
+function createChatRoom(
+  io: SocketIOServer,
+  userId1: string,
+  userId2: string,
+  user1: QueuedUser,
+  user2: QueuedUser,
+): void {
   const roomId = generateRoomId();
 
   const room: ActiveRoom = {
@@ -86,12 +106,18 @@ function createChatRoom(io: SocketIOServer, userId1: string, userId2: string, us
 
   io.to(userId1).emit("matched", {
     room_id: roomId,
-    partner: { username: user1OtherInfo.username, gender: user1OtherInfo.gender },
+    partner: {
+      username: user1OtherInfo.username,
+      gender: user1OtherInfo.gender,
+    },
   });
 
   io.to(userId2).emit("matched", {
     room_id: roomId,
-    partner: { username: user2OtherInfo.username, gender: user2OtherInfo.gender },
+    partner: {
+      username: user2OtherInfo.username,
+      gender: user2OtherInfo.gender,
+    },
   });
 
   // Notify both users they've been matched
@@ -107,7 +133,10 @@ function registerSocketHandlers(io: SocketIOServer): void {
 
       // Check if socket is already in queue
       if (waitingQueue.has(socket.id)) {
-        socket.emit("queue_ack", { success: false, message: "Already in queue" });
+        socket.emit("queue_ack", {
+          success: false,
+          message: "Already in queue",
+        });
         return;
       }
 
@@ -207,7 +236,9 @@ function registerSocketHandlers(io: SocketIOServer): void {
       if (roomId) {
         const room = activeRooms.get(roomId);
         if (room) {
-          const userIndex = room.users.findIndex((u) => u.socketId === socket.id);
+          const userIndex = room.users.findIndex(
+            (u) => u.socketId === socket.id,
+          );
           if (userIndex !== -1) {
             const leavingUser = room.users[userIndex];
             const otherUser = room.users[1 - userIndex];
