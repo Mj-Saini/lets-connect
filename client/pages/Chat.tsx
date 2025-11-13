@@ -41,10 +41,10 @@ export default function Chat() {
 
   // Setup socket listeners
   useEffect(() => {
-    if (!socket || !roomId) return;
+    if (!socket) return;
 
     const handleMessage = (data: { room_id: string; username: string; text: string; timestamp: number }) => {
-      if (data.room_id !== roomId) return;
+      if (roomId && data.room_id !== roomId) return;
 
       const newMessage: Message = {
         id: `${data.timestamp}-${Math.random()}`,
@@ -58,7 +58,7 @@ export default function Chat() {
     };
 
     const handlePartnerLeft = (data: { room_id: string; partner_username: string }) => {
-      if (data.room_id !== roomId) return;
+      if (roomId && data.room_id !== roomId) return;
 
       toast({
         title: "Partner disconnected",
@@ -66,8 +66,10 @@ export default function Chat() {
         variant: "destructive",
       });
 
-      // Show find new match button
-      setLocalIsSearching(true);
+      // Clear partner and show find new match button
+      setPartner(null);
+      setRoomId(null);
+      setLocalIsSearching(false);
     };
 
     const handleMatched = (data: { room_id: string; partner: { username: string; gender: string } }) => {
