@@ -1,7 +1,9 @@
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { createServer } from "./server";
+import { createServer as createExpressServer } from "./server";
+import { createServer as createHttpServer } from "http";
+import { Server as SocketIOServer } from "socket.io";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -12,6 +14,7 @@ export default defineConfig(({ mode }) => ({
       allow: ["./client", "./shared"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
+    middlewareMode: true,
   },
   build: {
     outDir: "dist/spa",
@@ -26,19 +29,26 @@ export default defineConfig(({ mode }) => ({
 }));
 
 function expressPlugin(): Plugin {
+  let io: SocketIOServer;
+
   return {
     name: "express-plugin",
-    apply: "serve", // Only apply during development (serve mode)
-    configureServer(server) {
-      const { app, httpServer, io } = createServer();
+    apply: "serve",
+    configureServer(viteServer) {
+      const { app, io: socketIO } = createExpressServer();
+      io = socketIO;
 
-      // Add Express app as middleware to Vite dev server
-      server.middlewares.use(app);
+      // Bind Socket.IO to Vite's HTTP server
+      io.attach((viteServer.httpServer as any), {
+        cors: {
+          origin: "*",
+          methods: ["GET", "POST"],
+        },
+      });
 
-      // Return a post hook to configure the HTTP server with Socket.IO
+      // Use Express app for regular HTTP requests
       return () => {
-        // Socket.IO is already initialized in the Express server
-        // and will work through the middleware
+        viteServer.middlewares.use(app);
       };
     },
   };
