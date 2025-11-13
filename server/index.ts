@@ -98,37 +98,7 @@ function createChatRoom(io: SocketIOServer, userId1: string, userId2: string, us
   io.to(roomId).emit("searching", { status: "matched" });
 }
 
-export function createSocketIO() {
-  // Returns a Socket.IO server that can be attached to an existing HTTP server
-  const io = new SocketIOServer({
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-    },
-  });
-  return io;
-}
-
-export function createServer() {
-  const app = express();
-  const httpServer = createHttpServer(app);
-  const io = createSocketIO();
-  io.attach(httpServer);
-
-  // Middleware
-  app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-
-  // Example API routes
-  app.get("/api/ping", (_req, res) => {
-    const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
-  });
-
-  app.get("/api/demo", handleDemo);
-
-  // Socket.IO events
+function registerSocketHandlers(io: SocketIOServer): void {
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
