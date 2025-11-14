@@ -151,7 +151,7 @@ export default function Matchmaking() {
                     "border-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500",
                     localGender === option.value
                       ? "bg-gradient-to-r from-rose-500 to-orange-500 text-white border-rose-500 shadow-lg shadow-rose-200 scale-105"
-                      : "bg-slate-50 text-slate-700 border-slate-200 hover:border-rose-300 hover:bg-rose-50"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:border-rose-300 hover:bg-rose-50",
                   )}
                 >
                   {option.label}

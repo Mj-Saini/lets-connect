@@ -91,10 +91,12 @@ export default function Chat() {
       partner: { username: string; gender: string };
     }) => {
       setRoomId(data.room_id);
-      setPartner(data.partner as {
-        username: string;
-        gender: "male" | "female" | "other";
-      });
+      setPartner(
+        data.partner as {
+          username: string;
+          gender: "male" | "female" | "other";
+        },
+      );
       setMessages([]);
       setMessageInput("");
       setIsSearching(false);
@@ -241,7 +243,10 @@ export default function Chat() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={cn("flex gap-2", msg.isOwn ? "flex-row-reverse" : "flex-row")}
+            className={cn(
+              "flex gap-2",
+              msg.isOwn ? "flex-row-reverse" : "flex-row",
+            )}
           >
             {!msg.isOwn && (
               <div className="w-7 h-7 rounded-full bg-gradient-to-br from-rose-400 to-orange-500 flex-shrink-0 flex items-center justify-center text-white text-xs font-semibold shadow-md">
@@ -253,7 +258,7 @@ export default function Chat() {
                 "max-w-xs rounded-2xl px-4 py-2.5 text-sm break-words shadow-sm",
                 msg.isOwn
                   ? "bg-gradient-to-r from-rose-500 to-orange-500 text-white rounded-br-none"
-                  : "bg-slate-100 text-slate-900 rounded-bl-none"
+                  : "bg-slate-100 text-slate-900 rounded-bl-none",
               )}
             >
               {msg.text}
@@ -287,7 +292,10 @@ export default function Chat() {
           </Button>
         ) : (
           // Message Input State
-          <form onSubmit={handleSendMessage} className="flex gap-2 items-center">
+          <form
+            onSubmit={handleSendMessage}
+            className="flex gap-2 items-center"
+          >
             {/* Leave/Reconnect Button */}
             <button
               type="button"
@@ -300,7 +308,7 @@ export default function Chat() {
                 "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500",
                 hasLeft
                   ? "bg-green-100 text-green-600 hover:bg-green-200 hover:scale-110"
-                  : "bg-slate-100 text-slate-600 hover:bg-rose-100 hover:text-rose-600"
+                  : "bg-slate-100 text-slate-600 hover:bg-rose-100 hover:text-rose-600",
               )}
             >
               <RotateCcw className="w-5 h-5" />
@@ -320,7 +328,9 @@ export default function Chat() {
             {/* Send Button */}
             <Button
               type="submit"
-              disabled={!messageInput.trim() || isSending || !connected || hasLeft}
+              disabled={
+                !messageInput.trim() || isSending || !connected || hasLeft
+              }
               className="flex-shrink-0 h-10 px-3 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-semibold disabled:opacity-50 transition-all duration-200"
               aria-label="Send message"
             >

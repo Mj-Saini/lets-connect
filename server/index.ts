@@ -133,7 +133,9 @@ function createChatRoom(
     },
   });
 
-  console.log(`Room ${roomId} created: ${user1.username} <-> ${user2.username}`);
+  console.log(
+    `Room ${roomId} created: ${user1.username} <-> ${user2.username}`,
+  );
 }
 
 function registerSocketHandlers(io: SocketIOServer): void {

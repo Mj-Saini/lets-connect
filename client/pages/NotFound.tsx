@@ -30,7 +30,9 @@ const NotFound = () => {
           <AMeetraLogo size={64} />
         </div>
         <h1 className="text-7xl font-bold text-slate-900 mb-4">404</h1>
-        <p className="text-xl text-slate-700 mb-4 font-semibold">Page not found</p>
+        <p className="text-xl text-slate-700 mb-4 font-semibold">
+          Page not found
+        </p>
         <p className="text-slate-600 mb-8 flex items-center justify-center gap-1 flex-wrap">
           <Heart className="w-4 h-4 text-rose-500" />
           This page doesn't exist. Let's find you the right connection!
