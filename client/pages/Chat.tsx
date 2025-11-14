@@ -19,7 +19,8 @@ interface Message {
 export default function Chat() {
   const navigate = useNavigate();
   const { socket, connected } = useSocket();
-  const { username, gender, roomId, partner, setRoomId, setPartner } = useChat();
+  const { username, gender, roomId, partner, setRoomId, setPartner } =
+    useChat();
   const { toast } = useToast();
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -41,7 +42,12 @@ export default function Chat() {
   useEffect(() => {
     if (!socket) return;
 
-    const handleMessage = (data: { room_id: string; username: string; text: string; timestamp: number }) => {
+    const handleMessage = (data: {
+      room_id: string;
+      username: string;
+      text: string;
+      timestamp: number;
+    }) => {
       if (roomId && data.room_id !== roomId) return;
 
       const newMessage: Message = {
@@ -55,7 +61,10 @@ export default function Chat() {
       setMessages((prev) => [...prev, newMessage]);
     };
 
-    const handlePartnerLeft = (data: { room_id: string; partner_username: string }) => {
+    const handlePartnerLeft = (data: {
+      room_id: string;
+      partner_username: string;
+    }) => {
       if (roomId && data.room_id !== roomId) return;
 
       toast({
@@ -69,16 +78,24 @@ export default function Chat() {
       setHasLeft(false);
       setPartner(null);
       setRoomId(null);
-      
+
       // Auto-start search after a short delay
       setTimeout(() => {
         handleConnect();
       }, 500);
     };
 
-    const handleMatched = (data: { room_id: string; partner: { username: string; gender: string } }) => {
+    const handleMatched = (data: {
+      room_id: string;
+      partner: { username: string; gender: string };
+    }) => {
       setRoomId(data.room_id);
-      setPartner(data.partner as { username: string; gender: "male" | "female" | "other" });
+      setPartner(
+        data.partner as {
+          username: string;
+          gender: "male" | "female" | "other";
+        },
+      );
       setMessages([]);
       setMessageInput("");
       setIsSearching(false);
@@ -174,7 +191,8 @@ export default function Chat() {
     return null;
   }
 
-  const genderLabel = partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
+  const genderLabel =
+    partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
 
   return (
     <div className="flex flex-col h-screen bg-white dark:bg-slate-900 overflow-hidden">
@@ -186,8 +204,12 @@ export default function Chat() {
               {partner.username.charAt(0).toUpperCase()}
             </div>
             <div>
-              <p className="font-semibold text-slate-900 dark:text-white text-sm">{partner.username}</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 capitalize">{genderLabel}</p>
+              <p className="font-semibold text-slate-900 dark:text-white text-sm">
+                {partner.username}
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 capitalize">
+                {genderLabel}
+              </p>
             </div>
           </div>
         </div>
@@ -198,7 +220,9 @@ export default function Chat() {
         {/* Placeholder when no messages */}
         {messages.length === 0 && !isSearching && partner && (
           <div className="flex items-center justify-center h-full">
-            <p className="text-slate-400 dark:text-slate-500 text-sm">Start the conversation!</p>
+            <p className="text-slate-400 dark:text-slate-500 text-sm">
+              Start the conversation!
+            </p>
           </div>
         )}
 
@@ -208,7 +232,9 @@ export default function Chat() {
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30">
               <Loader className="w-6 h-6 text-indigo-600 dark:text-indigo-400 animate-spin" />
             </div>
-            <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Looking for a match...</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+              Looking for a match...
+            </p>
           </div>
         )}
 
@@ -218,7 +244,7 @@ export default function Chat() {
             key={msg.id}
             className={cn(
               "flex gap-2",
-              msg.isOwn ? "flex-row-reverse" : "flex-row"
+              msg.isOwn ? "flex-row-reverse" : "flex-row",
             )}
           >
             {!msg.isOwn && (
@@ -231,7 +257,7 @@ export default function Chat() {
                 "max-w-xs rounded-lg px-3 py-2 text-sm break-words",
                 msg.isOwn
                   ? "bg-indigo-600 text-white rounded-br-none"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none",
               )}
             >
               {msg.text}
@@ -262,20 +288,25 @@ export default function Chat() {
           </Button>
         ) : (
           // Message Input State
-          <form onSubmit={handleSendMessage} className="flex gap-2 items-center">
+          <form
+            onSubmit={handleSendMessage}
+            className="flex gap-2 items-center"
+          >
             {/* Leave/Reconnect Button */}
             <button
               type="button"
               onClick={() => (hasLeft ? handleConnect() : handleLeave())}
               disabled={isSending || !connected}
               aria-label={hasLeft ? "Reconnect" : "Leave chat"}
-              title={hasLeft ? "Click to reconnect" : "Click to leave this chat"}
+              title={
+                hasLeft ? "Click to reconnect" : "Click to leave this chat"
+              }
               className={cn(
                 "flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200",
                 "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-800",
                 hasLeft
                   ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50"
-                  : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600"
+                  : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600",
               )}
             >
               <RotateCcw className="w-5 h-5" />
@@ -295,7 +326,9 @@ export default function Chat() {
             {/* Send Button */}
             <Button
               type="submit"
-              disabled={!messageInput.trim() || isSending || !connected || hasLeft}
+              disabled={
+                !messageInput.trim() || isSending || !connected || hasLeft
+              }
               className="flex-shrink-0 h-10 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold"
               aria-label="Send message"
             >
