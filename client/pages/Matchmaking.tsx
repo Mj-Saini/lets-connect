@@ -94,16 +94,16 @@ export default function Matchmaking() {
           <div className="inline-flex items-center justify-center mb-5 drop-shadow-lg">
             <AMeetraLogo size={72} />
           </div>
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-rose-600 via-pink-600 to-orange-500 bg-clip-text text-transparent mb-3">
+          <h1 className={cn("text-5xl font-bold bg-clip-text text-transparent mb-3 transition-all duration-1000", `bg-gradient-to-r ${colors.dark}`)}>
             aMeetRa
           </h1>
           <p className="text-slate-700 text-base font-semibold mb-1">
             Find your perfect connection
           </p>
-          <p className="text-slate-500 text-sm flex items-center justify-center gap-1">
-            <Heart className="w-4 h-4 text-rose-500" />
+          <p className="text-slate-600 text-sm flex items-center justify-center gap-1">
+            <Heart className={cn("w-4 h-4 transition-all duration-1000", colors.accent.replace("from-", "").replace(" to-", " "))} />
             Random chats, real connections
-            <Heart className="w-4 h-4 text-rose-500" />
+            <Heart className={cn("w-4 h-4 transition-all duration-1000", colors.accent.replace("from-", "").replace(" to-", " "))} />
           </p>
         </div>
 
