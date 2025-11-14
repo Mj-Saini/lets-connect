@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "@/hooks/useSocket";
 import { useChat } from "@/hooks/useChat";
+import { useDynamicTheme } from "@/hooks/useDynamicTheme";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MessageSquare, Sparkles, Heart } from "lucide-react";
@@ -11,6 +12,7 @@ import { AMeetraLogo } from "@/components/AMeetraLogo";
 export default function Matchmaking() {
   const navigate = useNavigate();
   const { socket, connected } = useSocket();
+  const { themeVariant, colors } = useDynamicTheme();
   const {
     username,
     setUsername,
