@@ -1,7 +1,8 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AMeetraLogo } from "@/components/AMeetraLogo";
 
 const NotFound = () => {
   const location = useLocation();
@@ -14,32 +15,32 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 via-pink-50 to-orange-50 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-pink-300 to-rose-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
         <div
-          className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-orange-300 to-amber-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"
           style={{ animationDelay: "2s" }}
         ></div>
       </div>
 
       <div className="relative text-center max-w-md mx-auto">
-        <h1 className="text-7xl font-bold text-slate-900 dark:text-white mb-4">
-          404
-        </h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400 mb-4 font-semibold">
-          Oops! Page not found
-        </p>
-        <p className="text-slate-600 dark:text-slate-400 mb-8">
-          The page you're looking for doesn't exist. Let's get you back to
-          chatting!
+        <div className="inline-flex items-center justify-center mb-6">
+          <AMeetraLogo size={64} />
+        </div>
+        <h1 className="text-7xl font-bold text-slate-900 mb-4">404</h1>
+        <p className="text-xl text-slate-700 mb-4 font-semibold">Page not found</p>
+        <p className="text-slate-600 mb-8 flex items-center justify-center gap-1 flex-wrap">
+          <Heart className="w-4 h-4 text-rose-500" />
+          This page doesn't exist. Let's find you the right connection!
+          <Heart className="w-4 h-4 text-rose-500" />
         </p>
 
         <Link to="/">
-          <Button className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700">
+          <Button className="inline-flex items-center gap-2 bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
             <ArrowLeft className="w-5 h-5" />
-            Return to Home
+            Back to aMeetRa
           </Button>
         </Link>
       </div>
