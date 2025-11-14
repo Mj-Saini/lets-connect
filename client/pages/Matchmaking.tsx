@@ -69,21 +69,21 @@ export default function Matchmaking() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-50 via-pink-50 to-orange-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className={cn("min-h-screen bg-gradient-to-b flex items-center justify-center p-4 relative overflow-hidden transition-all duration-1000", `${colors.bg}`)}>
       {/* Background decorative elements - romantic theme */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Pink gradient circle */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-pink-300 to-rose-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+        {/* Decorative gradient circle 1 */}
+        <div className={cn("absolute -top-40 -right-40 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse transition-all duration-1000", `bg-gradient-to-br ${colors.from} to-transparent`)}></div>
 
-        {/* Orange gradient circle */}
+        {/* Decorative gradient circle 2 */}
         <div
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-orange-300 to-amber-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"
+          className={cn("absolute -bottom-40 -left-40 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse transition-all duration-1000", `bg-gradient-to-tr ${colors.from} to-transparent`)}
           style={{ animationDelay: "2s" }}
         ></div>
 
-        {/* Purple accent circle */}
+        {/* Decorative gradient circle 3 */}
         <div
-          className="absolute top-1/2 right-1/4 w-64 h-64 bg-gradient-to-bl from-violet-300 to-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
+          className={cn("absolute top-1/2 right-1/4 w-64 h-64 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse transition-all duration-1000", `bg-gradient-to-bl ${colors.via} to-transparent`)}
           style={{ animationDelay: "4s" }}
         ></div>
       </div>
