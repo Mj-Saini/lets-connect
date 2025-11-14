@@ -69,21 +69,37 @@ export default function Matchmaking() {
   ];
 
   return (
-    <div className={cn("min-h-screen bg-gradient-to-b flex items-center justify-center p-4 relative overflow-hidden transition-all duration-1000", `${colors.bg}`)}>
+    <div
+      className={cn(
+        "min-h-screen bg-gradient-to-b flex items-center justify-center p-4 relative overflow-hidden transition-all duration-1000",
+        `${colors.bg}`,
+      )}
+    >
       {/* Background decorative elements - romantic theme */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Decorative gradient circle 1 */}
-        <div className={cn("absolute -top-40 -right-40 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse transition-all duration-1000", `bg-gradient-to-br ${colors.from} to-transparent`)}></div>
+        <div
+          className={cn(
+            "absolute -top-40 -right-40 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse transition-all duration-1000",
+            `bg-gradient-to-br ${colors.from} to-transparent`,
+          )}
+        ></div>
 
         {/* Decorative gradient circle 2 */}
         <div
-          className={cn("absolute -bottom-40 -left-40 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse transition-all duration-1000", `bg-gradient-to-tr ${colors.from} to-transparent`)}
+          className={cn(
+            "absolute -bottom-40 -left-40 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse transition-all duration-1000",
+            `bg-gradient-to-tr ${colors.from} to-transparent`,
+          )}
           style={{ animationDelay: "2s" }}
         ></div>
 
         {/* Decorative gradient circle 3 */}
         <div
-          className={cn("absolute top-1/2 right-1/4 w-64 h-64 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse transition-all duration-1000", `bg-gradient-to-bl ${colors.via} to-transparent`)}
+          className={cn(
+            "absolute top-1/2 right-1/4 w-64 h-64 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse transition-all duration-1000",
+            `bg-gradient-to-bl ${colors.via} to-transparent`,
+          )}
           style={{ animationDelay: "4s" }}
         ></div>
       </div>
@@ -94,16 +110,31 @@ export default function Matchmaking() {
           <div className="inline-flex items-center justify-center mb-5 drop-shadow-lg">
             <AMeetraLogo size={72} />
           </div>
-          <h1 className={cn("text-5xl font-bold bg-clip-text text-transparent mb-3 transition-all duration-1000", `bg-gradient-to-r ${colors.dark}`)}>
+          <h1
+            className={cn(
+              "text-5xl font-bold bg-clip-text text-transparent mb-3 transition-all duration-1000",
+              `bg-gradient-to-r ${colors.dark}`,
+            )}
+          >
             aMeetRa
           </h1>
           <p className="text-slate-700 text-base font-semibold mb-1">
             Find your perfect connection
           </p>
           <p className="text-slate-600 text-sm flex items-center justify-center gap-1">
-            <Heart className={cn("w-4 h-4 transition-all duration-1000", colors.accent.replace("from-", "").replace(" to-", " "))} />
+            <Heart
+              className={cn(
+                "w-4 h-4 transition-all duration-1000",
+                colors.accent.replace("from-", "").replace(" to-", " "),
+              )}
+            />
             Random chats, real connections
-            <Heart className={cn("w-4 h-4 transition-all duration-1000", colors.accent.replace("from-", "").replace(" to-", " "))} />
+            <Heart
+              className={cn(
+                "w-4 h-4 transition-all duration-1000",
+                colors.accent.replace("from-", "").replace(" to-", " "),
+              )}
+            />
           </p>
         </div>
 

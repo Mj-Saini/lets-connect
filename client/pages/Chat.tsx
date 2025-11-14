@@ -66,7 +66,7 @@ export default function Chat() {
           (msg) =>
             msg.username === newMessage.username &&
             msg.text === newMessage.text &&
-            Math.abs(msg.timestamp - newMessage.timestamp) < 100 // Within 100ms
+            Math.abs(msg.timestamp - newMessage.timestamp) < 100, // Within 100ms
         );
 
         if (isDuplicate) {
