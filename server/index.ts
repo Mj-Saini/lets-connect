@@ -100,6 +100,19 @@ function createChatRoom(
   userToRoom.set(userId1, roomId);
   userToRoom.set(userId2, roomId);
 
+  // Make sockets join the room
+  const socket1 = io.sockets.sockets.get(userId1);
+  const socket2 = io.sockets.sockets.get(userId2);
+
+  if (socket1) {
+    socket1.join(roomId);
+    console.log(`Socket ${userId1} joined room ${roomId}`);
+  }
+  if (socket2) {
+    socket2.join(roomId);
+    console.log(`Socket ${userId2} joined room ${roomId}`);
+  }
+
   // Get the other user's info for each user
   const user1OtherInfo = room.users[1];
   const user2OtherInfo = room.users[0];
@@ -120,8 +133,9 @@ function createChatRoom(
     },
   });
 
-  // Notify both users they've been matched
-  io.to(roomId).emit("searching", { status: "matched" });
+  console.log(
+    `Room ${roomId} created: ${user1.username} <-> ${user2.username}`,
+  );
 }
 
 function registerSocketHandlers(io: SocketIOServer): void {
@@ -171,6 +185,7 @@ function registerSocketHandlers(io: SocketIOServer): void {
       const room = activeRooms.get(room_id);
 
       if (!room) {
+        console.error(`Room ${room_id} not found`);
         socket.emit("error", { message: "Room not found" });
         return;
       }
@@ -178,9 +193,12 @@ function registerSocketHandlers(io: SocketIOServer): void {
       // Check if socket is in this room
       const user = room.users.find((u) => u.socketId === socket.id);
       if (!user) {
+        console.error(`Socket ${socket.id} not in room ${room_id}`);
         socket.emit("error", { message: "Not in this room" });
         return;
       }
+
+      console.log(`[${room_id}] ${user.username}: ${text}`);
 
       // Emit message to room (including sender)
       io.to(room_id).emit("message", {
