@@ -183,6 +183,7 @@ function registerSocketHandlers(io: SocketIOServer): void {
       const room = activeRooms.get(room_id);
 
       if (!room) {
+        console.error(`Room ${room_id} not found`);
         socket.emit("error", { message: "Room not found" });
         return;
       }
@@ -190,9 +191,12 @@ function registerSocketHandlers(io: SocketIOServer): void {
       // Check if socket is in this room
       const user = room.users.find((u) => u.socketId === socket.id);
       if (!user) {
+        console.error(`Socket ${socket.id} not in room ${room_id}`);
         socket.emit("error", { message: "Not in this room" });
         return;
       }
+
+      console.log(`[${room_id}] ${user.username}: ${text}`);
 
       // Emit message to room (including sender)
       io.to(room_id).emit("message", {
