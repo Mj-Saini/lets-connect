@@ -4,8 +4,9 @@ import { useSocket } from "@/hooks/useSocket";
 import { useChat } from "@/hooks/useChat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Users, MessageSquare } from "lucide-react";
+import { MessageSquare, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AMeetraLogo } from "@/components/AMeetraLogo";
 
 export default function Matchmaking() {
   const navigate = useNavigate();
