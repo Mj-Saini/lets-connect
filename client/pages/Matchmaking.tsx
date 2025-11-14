@@ -4,7 +4,7 @@ import { useSocket } from "@/hooks/useSocket";
 import { useChat } from "@/hooks/useChat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageSquare, Sparkles } from "lucide-react";
+import { MessageSquare, Sparkles, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AMeetraLogo } from "@/components/AMeetraLogo";
 
@@ -67,40 +67,54 @@ export default function Matchmaking() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center p-4">
-      {/* Background decorative elements */}
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 via-pink-50 to-orange-50 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background decorative elements - romantic theme */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"></div>
+        {/* Pink gradient circle */}
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-pink-300 to-rose-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+
+        {/* Orange gradient circle */}
         <div
-          className="absolute bottom-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-pulse"
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-orange-300 to-amber-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"
           style={{ animationDelay: "2s" }}
+        ></div>
+
+        {/* Purple accent circle */}
+        <div
+          className="absolute top-1/2 right-1/4 w-64 h-64 bg-gradient-to-bl from-violet-300 to-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
+          style={{ animationDelay: "4s" }}
         ></div>
       </div>
 
       <div className="relative w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 mb-4 shadow-lg">
-            <Users className="w-7 h-7 text-white" />
+        {/* Header with logo */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center mb-5 drop-shadow-lg">
+            <AMeetraLogo size={72} />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-            Chat Connect
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-rose-600 via-pink-600 to-orange-500 bg-clip-text text-transparent mb-3">
+            aMeetRa
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">
-            Find someone to talk to instantly
+          <p className="text-slate-700 text-base font-semibold mb-1">
+            Find your perfect connection
+          </p>
+          <p className="text-slate-500 text-sm flex items-center justify-center gap-1">
+            <Heart className="w-4 h-4 text-rose-500" />
+            Random chats, real connections
+            <Heart className="w-4 h-4 text-rose-500" />
           </p>
         </div>
 
         {/* Main card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-8 space-y-6"
+          className="bg-white rounded-3xl shadow-2xl p-8 space-y-6 backdrop-blur-sm"
         >
           {/* Username Input */}
           <div className="space-y-2">
             <label
               htmlFor="username"
-              className="block text-sm font-semibold text-slate-700 dark:text-slate-300"
+              className="block text-sm font-semibold bg-gradient-to-r from-rose-600 to-orange-500 bg-clip-text text-transparent"
             >
               Your Name
             </label>
@@ -112,7 +126,7 @@ export default function Matchmaking() {
               onChange={(e) => setLocalUsername(e.target.value)}
               disabled={isLoading}
               maxLength={30}
-              className="text-base h-12 rounded-xl border-slate-200 dark:border-slate-700"
+              className="text-base h-12 rounded-xl border-2 border-rose-200 focus:border-rose-500 focus:ring-rose-500 placeholder:text-slate-400 transition-all duration-200"
               autoFocus
               aria-label="Username"
             />
@@ -120,8 +134,8 @@ export default function Matchmaking() {
 
           {/* Gender Selection */}
           <div className="space-y-3">
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Gender
+            <label className="block text-sm font-semibold bg-gradient-to-r from-rose-600 to-orange-500 bg-clip-text text-transparent">
+              I am looking for
             </label>
             <div className="grid grid-cols-3 gap-3">
               {genderOptions.map((option) => (
@@ -133,11 +147,11 @@ export default function Matchmaking() {
                   aria-label={option.label}
                   aria-pressed={localGender === option.value}
                   className={cn(
-                    "py-3 px-4 rounded-xl font-medium transition-all duration-200 text-sm",
-                    "border-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-900",
+                    "py-3 px-4 rounded-xl font-semibold transition-all duration-300 text-sm transform",
+                    "border-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500",
                     localGender === option.value
-                      ? "bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-200 dark:shadow-indigo-900"
-                      : "bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600",
+                      ? "bg-gradient-to-r from-rose-500 to-orange-500 text-white border-rose-500 shadow-lg shadow-rose-200 scale-105"
+                      : "bg-slate-50 text-slate-700 border-slate-200 hover:border-rose-300 hover:bg-rose-50"
                   )}
                 >
                   {option.label}
@@ -148,7 +162,8 @@ export default function Matchmaking() {
 
           {/* Error message */}
           {error && (
-            <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 text-sm">
+            <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-medium flex items-start gap-2">
+              <span className="text-base">⚠️</span>
               {error}
             </div>
           )}
@@ -157,32 +172,33 @@ export default function Matchmaking() {
           <Button
             type="submit"
             disabled={isLoading || !connected}
-            className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-200"
+            className="w-full h-12 text-base font-bold rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-orange-500 hover:from-rose-600 hover:via-pink-600 hover:to-orange-600 text-white shadow-lg hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-2">
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                Entering...
+                Getting ready...
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                <MessageSquare className="w-5 h-5" />
-                Enter Chat Room
+                <Sparkles className="w-5 h-5" />
+                Start Meeting
+                <Sparkles className="w-5 h-5" />
               </span>
             )}
           </Button>
 
           {/* Connection status */}
           {!connected && (
-            <div className="text-center text-xs text-slate-500 dark:text-slate-400">
+            <div className="text-center text-xs text-slate-400 animate-pulse">
               Connecting to server...
             </div>
           )}
         </form>
 
         {/* Footer text */}
-        <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
-          By joining, you agree to our terms of service
+        <p className="text-center text-xs text-slate-500 mt-8">
+          Find genuine connections in a safe, anonymous way
         </p>
       </div>
     </div>
