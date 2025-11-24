@@ -186,16 +186,6 @@ export default function Chat() {
     setMessageInput("");
     setIsSending(true);
 
-    const optimisticMessage: Message = {
-      id: `${Date.now()}-${Math.random()}`,
-      username: username,
-      text,
-      timestamp: Date.now(),
-      isOwn: true,
-    };
-
-    setMessages((prev) => [...prev, optimisticMessage]);
-
     socket.emit("send_message", {
       room_id: roomId,
       text,
