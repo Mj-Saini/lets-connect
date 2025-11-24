@@ -16,7 +16,8 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Connect to the server
-    const apiUrl = import.meta.env.VITE_PUBLIC_API_URL || window.location.origin;
+    const apiUrl =
+      import.meta.env.VITE_PUBLIC_API_URL || window.location.origin;
     const socketInstance = io(apiUrl, {
       reconnection: true,
       reconnectionDelay: 1000,
