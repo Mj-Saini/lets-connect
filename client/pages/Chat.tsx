@@ -59,23 +59,7 @@ export default function Chat() {
         isOwn: data.username === username,
       };
 
-      // Prevent duplicate messages: check if message already exists
-      setMessages((prev) => {
-        // Check if this message already exists (by text and username and approximate timestamp)
-        const isDuplicate = prev.some(
-          (msg) =>
-            msg.username === newMessage.username &&
-            msg.text === newMessage.text &&
-            Math.abs(msg.timestamp - newMessage.timestamp) < 100, // Within 100ms
-        );
-
-        if (isDuplicate) {
-          console.log("Duplicate message ignored:", newMessage.text);
-          return prev;
-        }
-
-        return [...prev, newMessage];
-      });
+      setMessages((prev) => [...prev, newMessage]);
     };
 
     const handlePartnerLeft = (data: {
