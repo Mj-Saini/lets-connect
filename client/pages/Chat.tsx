@@ -202,7 +202,7 @@ export default function Chat() {
     partner?.gender.charAt(0).toUpperCase() + partner?.gender.slice(1);
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-white via-rose-50/30 to-white overflow-hidden">
+    <div className="flex flex-col bg-gradient-to-b from-white via-rose-50/30 to-white overflow-hidden" style={{ height: "100dvh" }}>
       {/* Top Bar - Partner Info */}
       {partner && (
         <div className="bg-gradient-to-r from-rose-50 to-orange-50 border-b border-rose-200 px-4 py-3 flex-shrink-0 shadow-sm">
